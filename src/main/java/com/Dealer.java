@@ -10,18 +10,24 @@ public class Dealer extends Player{
     /**
      * isContinueに16以下では降りれないようにする機能を追加
      */
+    int money = 10000;
     @Override
-    public boolean isContinue(){
-        checkCards();
+    public int inputAction(){
+        printHand();
         Scanner scanner = new Scanner(System.in);
-        String inputLine = scanner.nextLine();
-        if(inputLine.equals("yes") || inputLine.equals("Yes") || inputLine.equals("YES"))
-            return true;
-        else if(checkSum() < 17 && checkSum() > 0){
-            System.out.println("Dealer can't stay under 17");
-            return true;
+        System.out.println("Decide your action.");
+        System.out.println("0: Stand");
+        System.out.println("1: Hit");
+        int action = scanner.nextInt();
+        if(checkSum() < 17 && checkSum() > 0 && action == 0){
+            System.out.println("Dealer can't stand under 17");
+            return 1;
         }
-        else
-            return false;
+        else if(action == 0 || action == 1)
+            return action;
+        else{
+            System.out.println("Invalid action");
+            return -1;
+        }
     }
 }

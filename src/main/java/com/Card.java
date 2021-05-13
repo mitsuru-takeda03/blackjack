@@ -13,6 +13,10 @@ public class Card {
         number = newNum;
     }
 
+    public void print(){
+        System.out.println("suit: "+suit+" number: "+number);
+    }
+
     public String getSuit(){
         return suit;
     }

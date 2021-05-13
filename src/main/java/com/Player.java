@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Player {
     private ArrayList<Card> hand;
     private int sumCard;
+    private int money=1000;
 
     /**
      * playerクラス
@@ -14,12 +15,24 @@ public class Player {
         hand = new ArrayList<>();
     }
 
+    public void resetHand(){
+        hand = new ArrayList<>();
+    }
+
+    public int getMoney(){
+        return money;
+    }
+
+    public void setMoney(int money){
+        this.money = money;
+    }
+
     public void drawCard(Card newCard){
         hand.add(newCard);
         checkSum();
     }
 
-    public void checkCards(){
+    public void printHand(){
         System.out.println("-------------------------------");
         System.out.println("Your Hands");
         for(Card card : hand){
@@ -29,24 +42,29 @@ public class Player {
     }
 
     /**
-     * ゲームの継続確認
-     * @return 継続するならtrue
+     * 行動をコンソールで入力
+     * @return 各行動のインデックス
      */
-    public boolean isContinue(){
-        checkCards();
+    public int inputAction(){
+        printHand();
         Scanner scanner = new Scanner(System.in);
-        String inputLine = scanner.nextLine();
-        if(inputLine.equals("yes") || inputLine.equals("Yes") || inputLine.equals("YES"))
-            return true;
-        else
-            return false;
+        System.out.println("Decide your action.");
+        System.out.println("0: Stand");
+        System.out.println("1: Hit");
+        System.out.println("2: Double");
+        System.out.println("3: Surrender");
+        int action = scanner.nextInt();
+        if(action >= 0 && action < 4)
+            return action;
+        else {
+            System.out.println("Invalid action");
+            return -1;
+        }
     }
 
     /**
      * 合計を計算
      * @return 合計値
-     * TODO
-     * Aの処理
      */
     public int checkSum(){
         int sumCard = 0;
