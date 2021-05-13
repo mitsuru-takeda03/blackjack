@@ -50,13 +50,27 @@ public class Player {
      */
     public int checkSum(){
         int sumCard = 0;
+        int countA = 0;
         for (Card card : hand){
-            if (card.getNumber() > 10){
+            if (card.getNumber() > 10) {
                 sumCard += 10;
             }
-            else{
+            else {
                 sumCard += card.getNumber();
             }
+            /**
+             * Aの枚数をカウント
+             */
+            if (card.getNumber() == 1)
+                countA += 1;
+        }
+        /**
+         * Aの処理
+         * 21を超えない範囲で1を11に変換
+         */
+        for(int i = 0; i < countA; i++){
+            if(sumCard + 10 < 21)
+                sumCard += 10;
         }
         if(sumCard > 21)
             sumCard = -1;
