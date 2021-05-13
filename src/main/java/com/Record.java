@@ -2,12 +2,16 @@ package com;
 
 import java.util.ArrayList;
 
-public class Score {
+/**
+ * 場に公開している情報を持つクラス
+ * カードと各プレイヤーが何回引いたかを保持する
+ */
+public class Record {
     private ArrayList<Card> initCards;
     private int playerDrawNum;
     private int dealerDrawNum;
 
-    Score(ArrayList<Card> initCards){
+    Record(ArrayList<Card> initCards){
         this.initCards = initCards;
         playerDrawNum = 2;
         dealerDrawNum = 2;

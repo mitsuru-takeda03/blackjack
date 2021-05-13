@@ -1,5 +1,9 @@
 package com;
 
+/**
+ * トランプのカード
+ * タプルとかもっといい方法があったら教えてください。
+ */
 public class Card {
     private String suit;
     private int number;

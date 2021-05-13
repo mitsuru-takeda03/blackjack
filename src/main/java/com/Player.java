@@ -6,13 +6,12 @@ public class Player {
     private ArrayList<Card> hand;
     private int sumCard;
 
+    /**
+     * playerクラス
+     * 手札を保持し、ドロー処理、継続確認、合計を計算
+     */
     Player(){
         hand = new ArrayList<>();
-        sumCard = 0;
-    }
-
-    public int getSumCard(){
-        return sumCard;
     }
 
     public void drawCard(Card newCard){
@@ -29,6 +28,10 @@ public class Player {
         System.out.println("-------------------------------");
     }
 
+    /**
+     * ゲームの継続確認
+     * @return 継続するならtrue
+     */
     public boolean isContinue(){
         checkCards();
         Scanner scanner = new Scanner(System.in);
@@ -39,6 +42,12 @@ public class Player {
             return false;
     }
 
+    /**
+     * 合計を計算
+     * @return 合計値
+     * TODO
+     * Aの処理
+     */
     public int checkSum(){
         int sumCard = 0;
         for (Card card : hand){

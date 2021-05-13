@@ -3,12 +3,19 @@ package com;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * 競技フィールドのクラス
+ * ゲームの進行を行う
+ */
 public class Field {
     private Player player;
     private Dealer dealer;
     private CardDeck cardDeck;
-    private Score score;
+    private Record record;
 
+    /**
+     * playerとdealerを初期化し山札をシャッフル
+     */
     Field(){
         player = new Player();
         dealer = new Dealer();
@@ -16,6 +23,10 @@ public class Field {
         cardDeck.shuffle();
     }
 
+    /**
+     * はじめにplayerとdealerはそれぞれ2枚引く
+     * 引いたカードを公開する
+     */
     public void initTurn(){
         ArrayList<Card> initCards = new ArrayList<Card>();
         for(int i = 0; i < 4; i++){
@@ -25,17 +36,22 @@ public class Field {
         player.drawCard(initCards.get(1));
         dealer.drawCard(initCards.get(2));
         dealer.drawCard(initCards.get(3));
-        score = new Score(initCards);
-        score.print();
+        record = new Record(initCards);
+        record.print();
     }
 
+    /**
+     * カードを引くか確認する
+     * 引く場合はゲームを進行
+     * @return 引いた場合にtrueを返す
+     */
     public boolean playerTurn() {
         Scanner scanner = new Scanner(System.in);
         boolean isContinue = player.isContinue();
         if(isContinue) {
             Card newCard = cardDeck.pop();
             player.drawCard(newCard);
-            score.addPlayerDrawNum();
+            record.addPlayerDrawNum();
             return true;
         }
         else{
@@ -43,13 +59,17 @@ public class Field {
         }
     }
 
+    /**
+     * TODO
+     * 名前が違うだけなのでplayerとまとめたい
+     */
     public boolean dealerTurn(){
         Scanner scanner = new Scanner(System.in);
         boolean isContinue = dealer.isContinue();
         if(isContinue) {
             Card newCard = cardDeck.pop();
             dealer.drawCard(newCard);
-            score.addDealerDrawNum();
+            record.addDealerDrawNum();
             return true;
         }
         else{
@@ -57,13 +77,16 @@ public class Field {
         }
     }
 
+    /**
+     * 勝敗判定
+     */
     public void judge(){
         int playerScore = player.checkSum();
         int dealerScore = dealer.checkSum();
         if(playerScore > dealerScore) {
             System.out.println("Player win");
         }
-        else if(playerScore == -1 && dealerScore == -1)
+        else if(playerScore == -1 && dealerScore == -1) //共にバースト
             System.out.println("Draw");
         else {
             System.out.println("Dealer win");

@@ -3,6 +3,10 @@ package com;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * 山札のクラス
+ * シャッフルと一枚引くことができます。
+ */
 public class CardDeck {
     private ArrayList<Card> deck;
 
