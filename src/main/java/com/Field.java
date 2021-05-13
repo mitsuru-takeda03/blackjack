@@ -83,13 +83,23 @@ public class Field {
     public void judge(){
         int playerScore = player.checkSum();
         int dealerScore = dealer.checkSum();
+        System.out.println("-------------------------------");
+        if(playerScore > 0)
+            System.out.println("Player: " + playerScore);
+        else
+            System.out.println("Player: Bust");
+        if(dealerScore > 0)
+            System.out.println("Dealer: " + dealerScore);
+        else
+            System.out.println("Dealer: Bust");
         if(playerScore > dealerScore) {
-            System.out.println("Player win");
+            System.out.println("result: Player win");
         }
-        else if(playerScore == -1 && dealerScore == -1) //共にバースト
-            System.out.println("Draw");
+        else if(playerScore == dealerScore && dealerScore > 0)
+            System.out.println("result: Draw");
         else {
-            System.out.println("Dealer win");
+            System.out.println("result: Dealer win");
         }
+        System.out.println("-------------------------------");
     }
 }
