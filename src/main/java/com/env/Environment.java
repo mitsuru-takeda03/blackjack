@@ -1,7 +1,5 @@
 package com.env;
 
-import RL.env.dealer.DealerObs;
-
 import java.util.ArrayList;
 
 public class Environment {
@@ -77,8 +75,10 @@ public class Environment {
         if(!canDealerDraw) // まだ引けるか確認
             return false;
 
-        if(action==0) // Stand
+        if(action==0) { // Stand
+            canDealerDraw = false;
             return false;
+        }
         else if(action==1){ //Hit
             Card newCard = cardDeck.pop();
             dealer.drawCard(newCard);
