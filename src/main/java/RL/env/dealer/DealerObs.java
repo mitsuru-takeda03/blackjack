@@ -1,24 +1,24 @@
-package RL.env;
-import com.Card;
+package RL.env.dealer;
+import com.env.Card;
 
 import java.util.ArrayList;
 
-public class State {
+public class DealerObs {
     private ArrayList<Card> playerCards;
     private int playerCardsNum;
     private ArrayList<Card> dealerCards;
-    private static int stateDimension = 2000;
+    private static int ObservationDimension = 2000;
 
-    State(){
+    DealerObs(){
     }
 
-    public void setState(ArrayList<Card> playerCards, int playerCardsNum, ArrayList<Card> dealerCards){
+    public void setObservation(ArrayList<Card> playerCards, int playerCardsNum, ArrayList<Card> dealerCards){
         this.playerCards = playerCards;
         this.playerCardsNum = playerCardsNum;
         this.dealerCards = dealerCards;
     }
 
-    public int getState(){
+    public int getObservation(){
         int sumPlayerCards = 0;
         int sumDealerCards = 0;
         for(Card card : playerCards){
@@ -30,7 +30,7 @@ public class State {
         return playerCardsNum * 20 * 20 + sumPlayerCards * 20 + sumDealerCards;
     }
 
-    public static int getStateDimension(){
-        return stateDimension;
+    public static int getObservationDimension(){
+        return ObservationDimension;
     }
 }

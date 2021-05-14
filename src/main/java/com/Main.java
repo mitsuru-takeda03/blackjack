@@ -10,19 +10,19 @@ import java.util.Scanner;
  */
 public class Main {
     public static void main(String[] args){
-        Field field = new Field();
+        EnvironmentPvsP environmentPvsP = new EnvironmentPvsP();
         while(true){
             Scanner scanner = new Scanner(System.in);
             System.out.println("Do you play Another Game?");
             System.out.println("NO: 0, YES: 1");
-            int isNewGame = scanner.nextInt();
-            if(isNewGame==1) {
-                field.initTurn();
-                while (field.playerTurn())
+            int isAnotherGame = scanner.nextInt();
+            if(isAnotherGame==1) {
+                environmentPvsP.initTurn();
+                while (environmentPvsP.playerTurn())
                     continue;
-                while (field.dealerTurn())
+                while (environmentPvsP.dealerTurn())
                     continue;
-                field.judge();
+                environmentPvsP.printJudge();
             }
             else {
                 System.out.println("See you next time!");

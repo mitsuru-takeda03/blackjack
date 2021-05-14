@@ -1,4 +1,6 @@
-package com;
+package com.env;
+
+import com.env.Card;
 
 import java.util.ArrayList;
 
@@ -11,7 +13,7 @@ public class Record {
     private int playerDrawNum;
     private int dealerDrawNum;
 
-    Record(ArrayList<Card> initCards){
+    public Record(ArrayList<Card> initCards){
         this.initCards = initCards;
         playerDrawNum = 2;
         dealerDrawNum = 2;

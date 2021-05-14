@@ -1,4 +1,6 @@
-package com;
+package com.env;
+
+import com.env.Card;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,7 +12,7 @@ import java.util.Collections;
 public class CardDeck {
     private ArrayList<Card> deck;
 
-    CardDeck(){
+    public CardDeck(){
         deck = new ArrayList<Card>();
         for(int num = 1; num < 14; num++) {
             for (String suit : new String[]{"spade", "heart", "diamond", "club"}) {

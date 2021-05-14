@@ -1,4 +1,4 @@
-package com;
+package com.env;
 
 import java.util.Scanner;
 
@@ -6,11 +6,11 @@ import java.util.Scanner;
  * playerクラスを継承
  * カードの合計が16以下では降りれない
  */
-public class Dealer extends Player{
+public class Dealer extends Player {
     /**
      * isContinueに16以下では降りれないようにする機能を追加
      */
-    int money = 10000;
+    protected int money = 10000;
     @Override
     public int inputAction(){
         printHand();

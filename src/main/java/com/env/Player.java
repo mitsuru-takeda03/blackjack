@@ -1,21 +1,19 @@
-package com;
+package com.env;
+import com.env.Card;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Player {
-    private ArrayList<Card> hand;
-    private int sumCard;
-    private int money=1000;
+    protected ArrayList<Card> hand;
+    protected int sumCard;
+    protected int money=1000;
 
     /**
      * playerクラス
      * 手札を保持し、ドロー処理、継続確認、合計を計算
      */
-    Player(){
-        hand = new ArrayList<>();
-    }
-
-    public void resetHand(){
+    public Player(){
         hand = new ArrayList<>();
     }
 
@@ -32,6 +30,10 @@ public class Player {
         checkSum();
     }
 
+    public ArrayList<Card> getHand(){
+        return hand;
+    }
+
     public void printHand(){
         System.out.println("-------------------------------");
         System.out.println("Your Hands");
@@ -39,6 +41,10 @@ public class Player {
             System.out.println("suit: "+card.getSuit()+", number: "+card.getNumber());
         }
         System.out.println("-------------------------------");
+    }
+
+    public void resetHand(){
+        hand = new ArrayList<>();
     }
 
     /**
@@ -90,7 +96,7 @@ public class Player {
             if(sumCard + 10 < 21)
                 sumCard += 10;
         }
-        if(sumCard > 21)
+        if(sumCard > 21) // bust
             sumCard = -1;
         return sumCard;
     }
