@@ -3,7 +3,7 @@ package com.env;
 import java.util.Scanner;
 
 /**
- * playerクラスを継承
+ * Dealerクラス
  * カードの合計が16以下では降りれない
  */
 public class Dealer {
@@ -11,7 +11,6 @@ public class Dealer {
     private int money = 10000;
 
     /**
-     * playerクラス
      * 手札を保持し、ドロー処理、継続確認、合計を計算
      */
     public Dealer() { hand = new Hand(); }
@@ -24,10 +23,12 @@ public class Dealer {
 
     public void setMoney(int money){
         this.money = money;
-    }/**
+    }
+
+    /**
+     * コンソールでアクションを決定
      * isContinueに16以下では降りれないようにする機能を追加
      */
-
     public Action inputAction(){
         System.out.println("-------------------------------------------");
         System.out.println("Dealer's Hands");
