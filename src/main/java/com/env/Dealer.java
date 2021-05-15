@@ -10,9 +10,6 @@ public class Dealer {
     private Hand hand;
     private int money = 10000;
 
-    /**
-     * 手札を保持し、ドロー処理、継続確認、合計を計算
-     */
     public Dealer() { hand = new Hand(); }
 
     public Hand getHand() { return hand; }

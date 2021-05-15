@@ -1,5 +1,8 @@
 package com.env;
 
+/**
+ * ゲームの進行状況を説明するenum
+ */
 public enum State {
     PlayerTurn("PlayerTurn"),
     DealerTurn("DealerTurn"),

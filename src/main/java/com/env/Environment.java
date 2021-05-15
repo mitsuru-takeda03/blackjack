@@ -2,6 +2,10 @@ package com.env;
 
 import java.util.ArrayList;
 
+/**
+ * ゲーム環境のクラス
+ * 画面出力は行わない
+ */
 public class Environment {
     protected Player player;
     protected Dealer dealer;
@@ -93,6 +97,11 @@ public class Environment {
             return false;
     }
 
+    /**
+     * gameMasterの行動を環境に反映
+     * 得点を計算し、掛け金の処理を行う
+     * @param gameMaster
+     */
     public void gameMasterAct(GameMaster gameMaster) {
         gameMaster.Judge(player.getHand().checkSum(), dealer.getHand().checkSum());
         settleBet(gameMaster);

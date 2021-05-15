@@ -2,6 +2,10 @@ package com.env;
 
 import java.util.ArrayList;
 
+/**
+ * 手札クラス
+ * 手札の保持、得点の計算をする
+ */
 public class Hand {
     private ArrayList<Card> hand;
     private int sumCard;
@@ -30,6 +34,10 @@ public class Hand {
         return string;
     }
 
+    /**
+     * 手札の合計を計算する
+     * @return 手札の合計、またはバーストは-1を返す
+     */
     public int checkSum(){
         int sumCard = 0;
         int countA = 0;

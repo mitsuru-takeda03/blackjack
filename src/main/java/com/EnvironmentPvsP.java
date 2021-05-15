@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * 競技フィールドのクラス
- * ゲームの進行を行う
+ * ゲーム環境のクラス
+ * Environmentのラッパーで画面出力を行う
  */
 public class EnvironmentPvsP extends Environment{
 
@@ -55,7 +55,9 @@ public class EnvironmentPvsP extends Environment{
     }
 
     /**
-     *
+     * gameMasterの動作
+     * 勝敗を決定し
+     * 結果をコンソール画面に出力
      */
     public void gameMasterTurn() {
         gameMasterAct(gameMaster);

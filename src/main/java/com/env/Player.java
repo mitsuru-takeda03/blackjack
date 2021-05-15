@@ -3,18 +3,17 @@ package com.env;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * playerクラス
+ * 手札を保持し、ドロー処理、継続確認、合計を計算
+ */
 public class Player {
     private Hand hand;
-    private int sumCard;
     private int money = 1000;
 
-    /**
-     * playerクラス
-     * 手札を保持し、ドロー処理、継続確認、合計を計算
-     */
-    public Player(){ hand = new Hand(); }
+    public Player() { hand = new Hand(); }
 
-    public Hand getHand(){ return hand; }
+    public Hand getHand() { return hand; }
 
     public int getMoney(){
         return money;
