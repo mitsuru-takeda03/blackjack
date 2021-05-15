@@ -5,14 +5,19 @@ import java.util.ArrayList;
 public class Environment {
     protected Player player;
     protected Dealer dealer;
+    protected GameMaster gameMaster;
+    protected Record record;
     protected CardDeck cardDeck;
     protected int bet;
-    protected boolean canPlayerDraw;
-    protected boolean canDealerDraw;
 
     public Environment(){
         player = new Player();
         dealer = new Dealer();
+        gameMaster = new GameMaster();
+    }
+
+    public State callGMState(){
+        return gameMaster.getState();
     }
 
     /**
@@ -23,18 +28,18 @@ public class Environment {
     public void resetEnvironment() {
         cardDeck = new CardDeck();
         cardDeck.shuffle();
-        player.resetHand();
-        dealer.resetHand();
-        canPlayerDraw = true;
-        canDealerDraw = true;
+        player.getHand().reset();
+        dealer.getHand().reset();
+        gameMaster.resetState();
         ArrayList<Card> initCards = new ArrayList<Card>();
         for(int i = 0; i < 4; i++){
             initCards.add(cardDeck.pop());
         }
-        player.drawCard(initCards.get(0));
-        player.drawCard(initCards.get(1));
-        dealer.drawCard(initCards.get(2));
-        dealer.drawCard(initCards.get(3));
+        player.getHand().addCard(initCards.get(0));
+        player.getHand().addCard(initCards.get(1));
+        dealer.getHand().addCard(initCards.get(2));
+        dealer.getHand().addCard(initCards.get(3));
+        record = new Record(initCards);
     }
 
     /**
@@ -42,25 +47,25 @@ public class Environment {
      * @param action 0: stand, 1: Hit, 2: Double, 3: Surrender
      * @return 引いたらtrue
      */
-    public boolean playerAct(Player player, int action){
-        if(!canPlayerDraw) // まだ引けるか確認
-            return false;
+    public boolean playerAct(Player player, Action action){
 
-        if(action==0 || action==3) { // Stand or Surrender
-            if(action==3)
-                bet /= 2;
-            canPlayerDraw = false;
+        if(action.equals(Action.Stand)) {
+            gameMaster.setState(State.DealerTurn);
+        }
+        if(action.equals(Action.Surrender)){
+            bet /= 2;
+            gameMaster.setState(State.Surrender);
             return false;
         }
-        else if(action==1 || action==2){ //Hit or Double
+        else if(action.equals(Action.Hit)|| action.equals(Action.Double)){ //Hit or Double
             Card newCard = cardDeck.pop();
-            player.drawCard(newCard);
-            if(action==2) { // Double
+            player.getHand().addCard(newCard);
+            if(action.equals(Action.Double)) { // Double
                 bet *= 2;
-                canPlayerDraw = false;
+                gameMaster.setState(State.DealerTurn);
             }
-            if(player.checkSum()==-1) // bustしたら
-                canPlayerDraw = false;
+            if(player.getHand().checkSum()==-1) // bustしたら
+                gameMaster.setState(State.DealerWin);
             return true;
         }
         else // invalid action
@@ -71,22 +76,37 @@ public class Environment {
      * @param action 0: stand, 1: Hit
      * @return 引いたらtrue
      */
-    public boolean dealerAct(Dealer dealer, int action){
-        if(!canDealerDraw) // まだ引けるか確認
-            return false;
+    public boolean dealerAct(Dealer dealer, Action action){
 
-        if(action==0) { // Stand
-            canDealerDraw = false;
+        if(action.equals(Action.Stand)) { // Stand
+            gameMaster.setState(State.Judgement);
             return false;
         }
-        else if(action==1){ //Hit
+        else if(action.equals(Action.Hit)){ // Hit
             Card newCard = cardDeck.pop();
-            dealer.drawCard(newCard);
-            if(dealer.checkSum()==-1) // bustしたら
-                canDealerDraw = false;
+            dealer.getHand().addCard(newCard);
+            if(dealer.getHand().checkSum()==-1) // bustしたら
+                gameMaster.setState(State.Judgement);
             return true;
         }
         else // invalid action
             return false;
+    }
+
+    public void gameMasterAct(GameMaster gameMaster) {
+        gameMaster.Judge(player.getHand().checkSum(), dealer.getHand().checkSum());
+        settleBet(gameMaster);
+    }
+
+    public void settleBet(GameMaster gameMaster) {
+        State state = gameMaster.getState();
+        if (state.equals(State.PlayerWin)) {
+            player.setMoney(player.getMoney() + bet);
+            dealer.setMoney(dealer.getMoney() - bet);
+        }
+        else if (state.equals(State.DealerWin) || state.equals(State.Surrender)) {
+            player.setMoney(player.getMoney() - bet);
+            dealer.setMoney(dealer.getMoney() + bet);
+        }
     }
 }

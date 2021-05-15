@@ -12,6 +12,7 @@ public class Record {
     private ArrayList<Card> initCards;
     private int playerDrawNum;
     private int dealerDrawNum;
+    String enter = System.lineSeparator();
 
     public Record(ArrayList<Card> initCards){
         this.initCards = initCards;
@@ -19,13 +20,15 @@ public class Record {
         dealerDrawNum = 2;
     }
 
-    public void print(){
-        System.out.println("-------------------------------");
-        System.out.println("Player's cards: "+initCards.get(0).getNumber()+", "+initCards.get(1).getNumber());
-        System.out.println("Player have drown in "+playerDrawNum+" times.");
-        System.out.println("Dealer's cards: "+initCards.get(2).getNumber());
-        System.out.println("Dealer have drown in "+dealerDrawNum+" times.");
-        System.out.println("-------------------------------");
+    @Override
+    public String toString(){
+        String string = "-------------------------------------------" + enter;
+        string += "Player's cards: " + initCards.get(0).toString() + ", " + initCards.get(1).getNumber() + enter;
+        string += "Player have drown in " + playerDrawNum + " times." + enter;
+        string += "Dealer's cards: " + initCards.get(2).toString() + ", " + enter;
+        string += "Dealer have drown in " + dealerDrawNum + " times." + enter;
+        string += "-------------------------------------------";
+        return string;
     }
 
     public void addPlayerDrawNum(){

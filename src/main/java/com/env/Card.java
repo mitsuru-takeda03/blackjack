@@ -5,8 +5,8 @@ package com.env;
  * タプルとかもっといい方法があったら教えてください。
  */
 public class Card {
-    private String suit;
-    private int number;
+    private final String suit;
+    private final int number;
 
     public Card(String newSuit, int newNum){
         suit = newSuit;
@@ -17,11 +17,12 @@ public class Card {
         System.out.println("suit: "+suit+" number: "+number);
     }
 
-    public String getSuit(){
-        return suit;
-    }
-
     public int getNumber(){
         return number;
+    }
+
+    @Override
+    public String toString(){
+        return "suit: " + suit + ", number: " + number;
     }
 }

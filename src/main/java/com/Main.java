@@ -1,5 +1,7 @@
 package com;
 
+import com.env.State;
+
 import java.util.Scanner;
 
 /**
@@ -18,11 +20,12 @@ public class Main {
             int isAnotherGame = scanner.nextInt();
             if(isAnotherGame==1) {
                 environmentPvsP.initTurn();
-                while (environmentPvsP.playerTurn())
-                    continue;
-                while (environmentPvsP.dealerTurn())
-                    continue;
-                environmentPvsP.printJudge();
+                while (environmentPvsP.callGMState().equals(State.PlayerTurn))
+                    environmentPvsP.playerTurn();
+                while (environmentPvsP.callGMState().equals(State.DealerTurn))
+                    environmentPvsP.dealerTurn();
+
+                environmentPvsP.gameMasterTurn();
             }
             else {
                 System.out.println("See you next time!");
