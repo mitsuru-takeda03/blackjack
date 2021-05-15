@@ -1,21 +1,20 @@
 package com.env;
-import com.env.Card;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Player {
-    protected ArrayList<Card> hand;
-    protected int sumCard;
-    protected int money=1000;
+    private Hand hand;
+    private int sumCard;
+    private int money = 1000;
 
     /**
      * playerクラス
      * 手札を保持し、ドロー処理、継続確認、合計を計算
      */
-    public Player(){
-        hand = new ArrayList<>();
-    }
+    public Player(){ hand = new Hand(); }
+
+    public Hand getHand(){ return hand; }
 
     public int getMoney(){
         return money;
@@ -25,34 +24,15 @@ public class Player {
         this.money = money;
     }
 
-    public void drawCard(Card newCard){
-        hand.add(newCard);
-        checkSum();
-    }
-
-    public ArrayList<Card> getHand(){
-        return hand;
-    }
-
-    public void printHand(){
-        System.out.println("-------------------------------");
-        System.out.println("Your Hands");
-        for(Card card : hand){
-            System.out.println("suit: "+card.getSuit()+", number: "+card.getNumber());
-        }
-        System.out.println("-------------------------------");
-    }
-
-    public void resetHand(){
-        hand = new ArrayList<>();
-    }
-
     /**
      * 行動をコンソールで入力
      * @return 各行動のインデックス
      */
-    public int inputAction(){
-        printHand();
+    public Action inputAction(){
+        System.out.println("-------------------------------------------");
+        System.out.println("Player's Hands");
+        System.out.println(hand.toString());
+        System.out.println("-------------------------------------------");
         Scanner scanner = new Scanner(System.in);
         System.out.println("Decide your action.");
         System.out.println("0: Stand");
@@ -60,44 +40,17 @@ public class Player {
         System.out.println("2: Double");
         System.out.println("3: Surrender");
         int action = scanner.nextInt();
-        if(action >= 0 && action < 4)
-            return action;
-        else {
+        if(action == 0)
+            return Action.Stand;
+        else if(action == 1)
+            return Action.Hit;
+        else if(action == 2)
+            return Action.Double;
+        else if(action == 3)
+            return Action.Surrender;
+        else{
             System.out.println("Invalid action");
-            return -1;
+            return Action.Invalid;
         }
-    }
-
-    /**
-     * 合計を計算
-     * @return 合計値
-     */
-    public int checkSum(){
-        int sumCard = 0;
-        int countA = 0;
-        for (Card card : hand){
-            if (card.getNumber() > 10) {
-                sumCard += 10;
-            }
-            else {
-                sumCard += card.getNumber();
-            }
-            /**
-             * Aの枚数をカウント
-             */
-            if (card.getNumber() == 1)
-                countA += 1;
-        }
-        /**
-         * Aの処理
-         * 21を超えない範囲で1を11に変換
-         */
-        for(int i = 0; i < countA; i++){
-            if(sumCard + 10 < 21)
-                sumCard += 10;
-        }
-        if(sumCard > 21) // bust
-            sumCard = -1;
-        return sumCard;
     }
 }

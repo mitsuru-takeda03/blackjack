@@ -10,7 +10,6 @@ import java.util.Scanner;
  * ゲームの進行を行う
  */
 public class EnvironmentPvsP extends Environment{
-    private Record record;
 
     /**
      * playerとdealerを初期化し山札をシャッフル
@@ -31,11 +30,8 @@ public class EnvironmentPvsP extends Environment{
         bet = scanner.nextInt();
         // deal
         super.resetEnvironment();
-        // record
-        ArrayList<Card> initCards = new ArrayList<Card>(player.getHand());
-        initCards.add(dealer.getHand().get(0));
-        record = new Record(initCards);
-        record.print();
+        // print
+        System.out.println(record.toString());;
     }
 
     /**
@@ -43,58 +39,28 @@ public class EnvironmentPvsP extends Environment{
      * 引く場合はゲームを進行
      * @return 引いた場合にtrueを返す
      */
-    public boolean playerTurn() {
+    public void playerTurn() {
         boolean didDraw = playerAct(player, player.inputAction());
         if(didDraw)
-            player.getHand().get(player.getHand().size()-1).print();
-        if(!canPlayerDraw)
-            return false;
-        return true;
+            System.out.println("Player drew " + player.getHand().getLastCard().toString());
     }
 
     /**
      * playerと同じ
      */
-    public boolean dealerTurn(){
+    public void dealerTurn(){
         boolean didDraw = dealerAct(dealer, dealer.inputAction());
         if(didDraw)
-            dealer.getHand().get(dealer.getHand().size()-1).print();
-        if(!canDealerDraw)
-            return false;
-        return true;
+            System.out.println("Dealer drew " + dealer.getHand().getLastCard().toString());
     }
 
     /**
-     * 勝敗判定+結果表示
+     *
      */
-    public void printJudge(){
-        int playerScore = player.checkSum();
-        int dealerScore = dealer.checkSum();
-        System.out.println("-------------------------------");
-        if(playerScore > 0)
-            System.out.println("Player: " + playerScore);
-        else
-            System.out.println("Player: Bust");
-        if(dealerScore > 0)
-            System.out.println("Dealer: " + dealerScore);
-        else
-            System.out.println("Dealer: Bust");
-        if(playerScore > dealerScore) {
-            System.out.println("result: Player won "+bet);
-            settleBet(1);
-        }
-        else if(playerScore == dealerScore && dealerScore > 0)
-            System.out.println("result: Draw");
-        else {
-            System.out.println("result: Dealer collected "+bet);
-            settleBet(-1);
-        }
-        System.out.println("-------------------------------");
-    }
-
-    public void settleBet(int didPlayerWin){
-        player.setMoney(player.getMoney() + bet * didPlayerWin);
-        dealer.setMoney(dealer.getMoney() + bet * didPlayerWin);
-        System.out.println("player's money: "+player.getMoney());
+    public void gameMasterTurn() {
+        gameMasterAct(gameMaster);
+        System.out.println(gameMaster.toString());
+        System.out.println("Player's money: " + player.getMoney());
+        System.out.println();
     }
 }
