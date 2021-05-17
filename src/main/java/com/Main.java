@@ -1,6 +1,6 @@
 package com;
 
-import com.env.State;
+import com.env.Status;
 
 import java.util.Scanner;
 
@@ -20,9 +20,9 @@ public class Main {
             int isAnotherGame = scanner.nextInt();
             if(isAnotherGame==1) {
                 environmentPvsP.initTurn();
-                while (environmentPvsP.callGMState().equals(State.PlayerTurn))
+                while (environmentPvsP.callGMState().equals(Status.PlayerTurn))
                     environmentPvsP.playerTurn();
-                while (environmentPvsP.callGMState().equals(State.DealerTurn))
+                while (environmentPvsP.callGMState().equals(Status.DealerTurn))
                     environmentPvsP.dealerTurn();
 
                 environmentPvsP.gameMasterTurn();

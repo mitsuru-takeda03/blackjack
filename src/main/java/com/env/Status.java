@@ -3,7 +3,7 @@ package com.env;
 /**
  * ゲームの進行状況を説明するenum
  */
-public enum State {
+public enum Status {
     PlayerTurn("PlayerTurn"),
     DealerTurn("DealerTurn"),
     Judgement("Judgement"),
@@ -14,7 +14,7 @@ public enum State {
 
     private String string;
 
-    State(String string) { this.string = string; }
+    Status(String string) { this.string = string; }
 
     @Override
     public String toString(){ return string; }

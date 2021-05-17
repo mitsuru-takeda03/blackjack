@@ -2,36 +2,36 @@ package com.env;
 
 public class GameMaster {
 
-    private State state;
+    private Status status;
     private int playerScore;
     private int dealerScore;
     private String enter = System.lineSeparator();
 
     GameMaster() { resetState(); }
 
-    public void resetState() { state = State.PlayerTurn;}
+    public void resetState() { status = Status.PlayerTurn;}
 
-    public State getState() { return state; }
+    public Status getState() { return status; }
 
-    public void setState(State state){ this.state = state; }
+    public void setState(Status status){ this.status = status; }
 
     public void Judge(int playerScore, int dealerScore) {
         this.playerScore = playerScore;
         this.dealerScore = dealerScore;
-        if (state.equals(State.Judgement)) {
+        if (status.equals(Status.Judgement)) {
             if (playerScore > dealerScore)
-                state = State.PlayerWin;
+                status = Status.PlayerWin;
             else if (playerScore == dealerScore && playerScore > 0)
-                state = State.Draw;
+                status = Status.Draw;
             else
-                state = State.DealerWin;
+                status = Status.DealerWin;
         }
     }
 
     @Override
     public String toString(){
-        if (state.equals(State.PlayerTurn) || state.equals(State.DealerTurn))
-            return state.toString();
+        if (status.equals(Status.PlayerTurn) || status.equals(Status.DealerTurn))
+            return status.toString();
 
         String string = "-------------------------------------------" + enter;
         if(playerScore > 0)
@@ -42,7 +42,7 @@ public class GameMaster {
             string += "Dealer: " + dealerScore + enter;
         else
             string += "Dealer: Bust" + enter;
-        string += "Result: " + state.toString() + enter;
+        string += "Result: " + status.toString() + enter;
         string += "-------------------------------------------";
 
         return string;

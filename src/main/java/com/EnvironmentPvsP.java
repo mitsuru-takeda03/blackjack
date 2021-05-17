@@ -9,12 +9,12 @@ import java.util.Scanner;
  * ゲーム環境のクラス
  * Environmentのラッパーで画面出力を行う
  */
-public class EnvironmentPvsP extends Environment{
+public class EnvironmentPvsP extends Environment {
 
     /**
      * playerとdealerを初期化し山札をシャッフル
      */
-    public EnvironmentPvsP(){
+    public EnvironmentPvsP() {
         super();
         System.out.println("Player's money: "+player.getMoney());
     }
@@ -23,7 +23,7 @@ public class EnvironmentPvsP extends Environment{
      * はじめにplayerとdealerはそれぞれ2枚引く
      * 引いたカードを公開する
      */
-    public void initTurn(){
+    public void initTurn() {
         // bet
         Scanner scanner = new Scanner(System.in);
         System.out.println("How much money do you bet?");
@@ -48,7 +48,7 @@ public class EnvironmentPvsP extends Environment{
     /**
      * playerと同じ
      */
-    public void dealerTurn(){
+    public void dealerTurn() {
         boolean didDraw = dealerAct(dealer, dealer.inputAction());
         if(didDraw)
             System.out.println("Dealer drew " + dealer.getHand().getLastCard().toString());

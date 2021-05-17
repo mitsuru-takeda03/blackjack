@@ -14,13 +14,13 @@ public class Environment {
     protected CardDeck cardDeck;
     protected int bet;
 
-    public Environment(){
+    protected Environment(){
         player = new Player();
         dealer = new Dealer();
         gameMaster = new GameMaster();
     }
 
-    public State callGMState(){
+    public Status callGMState(){
         return gameMaster.getState();
     }
 
@@ -54,11 +54,11 @@ public class Environment {
     public boolean playerAct(Player player, Action action){
 
         if(action.equals(Action.Stand)) {
-            gameMaster.setState(State.DealerTurn);
+            gameMaster.setState(Status.DealerTurn);
         }
         if(action.equals(Action.Surrender)){
             bet /= 2;
-            gameMaster.setState(State.Surrender);
+            gameMaster.setState(Status.Surrender);
             return false;
         }
         else if(action.equals(Action.Hit)|| action.equals(Action.Double)){ //Hit or Double
@@ -66,10 +66,10 @@ public class Environment {
             player.getHand().addCard(newCard);
             if(action.equals(Action.Double)) { // Double
                 bet *= 2;
-                gameMaster.setState(State.DealerTurn);
+                gameMaster.setState(Status.DealerTurn);
             }
             if(player.getHand().checkSum()==-1) // bustしたら
-                gameMaster.setState(State.DealerWin);
+                gameMaster.setState(Status.DealerWin);
             return true;
         }
         else // invalid action
@@ -83,14 +83,14 @@ public class Environment {
     public boolean dealerAct(Dealer dealer, Action action){
 
         if(action.equals(Action.Stand)) { // Stand
-            gameMaster.setState(State.Judgement);
+            gameMaster.setState(Status.Judgement);
             return false;
         }
         else if(action.equals(Action.Hit)){ // Hit
             Card newCard = cardDeck.pop();
             dealer.getHand().addCard(newCard);
             if(dealer.getHand().checkSum()==-1) // bustしたら
-                gameMaster.setState(State.Judgement);
+                gameMaster.setState(Status.Judgement);
             return true;
         }
         else // invalid action
@@ -107,13 +107,17 @@ public class Environment {
         settleBet(gameMaster);
     }
 
+    /**
+     * 掛け金の徴収を行う
+     * @param gameMaster
+     */
     public void settleBet(GameMaster gameMaster) {
-        State state = gameMaster.getState();
-        if (state.equals(State.PlayerWin)) {
+        Status status = gameMaster.getState();
+        if (status.equals(Status.PlayerWin)) {
             player.setMoney(player.getMoney() + bet);
             dealer.setMoney(dealer.getMoney() - bet);
         }
-        else if (state.equals(State.DealerWin) || state.equals(State.Surrender)) {
+        else if (status.equals(Status.DealerWin) || status.equals(Status.Surrender)) {
             player.setMoney(player.getMoney() - bet);
             dealer.setMoney(dealer.getMoney() + bet);
         }
